@@ -1,0 +1,242 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "warn",
+    "timestamp": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "0.0.0.0:9090",
+      "external_ui": "yacd",
+      "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+      "external_ui_download_detour": "Internet",
+      "secret": "",
+      "default_mode": "rule",
+      "store_selected": true,
+      "cache_file": "clash.db"
+    }
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "Internet-dns",
+        "address": "1.0.0.1",
+        "strategy": "ipv4_only",
+        "detour": "Internet"
+      },
+      {
+        "tag": "Best Latency-dns",
+        "address": "1.1.1.1",
+        "strategy": "ipv4_only",
+        "detour": "Best Latency"
+      },
+      {
+        "tag": "direct-dns",
+        "address": "local",
+        "strategy": "ipv4_only",
+        "detour": "direct"
+      },
+      {
+        "tag": "block-dns",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "domain_suffix": [
+          ".arpa.",
+          ".arpa"
+        ],
+        "server": "block-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "domain_suffix": [
+          "v2rayfroshmci.ddns.net",
+          "online.alphav.top",
+          "all-antiv2ray.ddns.net",
+          "all-antiv2ray.ddns.net",
+          "all-antiv2ray.ddns.net",
+          "v2rayfroshmci.ddns.net",
+          "v2rayfroshmci.ddns.net",
+          "all1.mebird1.fun",
+          "all1.mebird1.fun",
+          "jioin-severnett7.numal.site",
+          "join.v2raytz.sbs",
+          "trch.blueberrynetwork.icu",
+          "trch.blueberrynetwork.icu",
+          "cd.darkmood.cfd",
+          "cd.darkmood.cfd",
+          "cd.darkmood.cfd",
+          "trch.blueberrynetwork.icu",
+          "uk.blueberrynetwork.icu",
+          "uk.blueberrynetwork.icu",
+          "trch.blueberrynetwork.icu",
+          "trch.blueberrynetwork.icu",
+          "uk.blueberrynetwork.icu",
+          "all.alphavp.space",
+          "mtn.alphavp.space",
+          "trch.blueberrynetwork.icu",
+          "trch.blueberrynetwork.icu",
+          "ada145.lefxb.com",
+          "ada36.qvqag.com",
+          "lightning6-joinbede.mamd.sbs",
+          "lightning6-joinbedee.mamd.sbs",
+          "ada145.lefxb.com",
+          "join.v2raytz.sbs",
+          "mt1.nabsk.com",
+          "ada36.qvqag.com",
+          "ada145.lefxb.com",
+          "mt1.nabsk.com",
+          "ada145.lefxb.com",
+          "mt1.nabsk.com",
+          "tel.icv2ray.top",
+          "tel.icv2ray.top",
+          "mci.divar.pro",
+          "mci.divar.pro",
+          "all.vpncustomize.cam",
+          "all.vpncustomize.cam",
+          "all.vpncustomize.cam",
+          "mtn.vpnprosec.com",
+          "mtn.vpnprosec.com",
+          "ir1.v-mizban.info",
+          "ir6.v-mizban.info"
+        ],
+        "server": "direct-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "network": "udp",
+        "port": 443,
+        "server": "block-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "Internet",
+        "server": "Internet-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "Best Latency",
+        "server": "Best Latency-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "direct",
+        "server": "direct-dns",
+        "rewrite_ttl": 20
+      },
+      {
+        "outbound": "any",
+        "server": "direct-dns",
+        "rewrite_ttl": 20
+      }
+    ],
+    "reverse_mapping": true,
+    "strategy": "ipv4_only",
+    "independent_cache": true,
+    "disable_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
+      "inet4_address": "172.19.0.1/30",
+      "mtu": 9000,
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "system",
+      "endpoint_independent_nat": true,
+      "sniff": true
+    },
+    {
+      "listen": "0.0.0.0",
+      "listen_port": 2080,
+      "sniff": true,
+      "tag": "mixed-in",
+      "type": "mixed"
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "selector",
+      "tag": "Internet",
+      "outbounds": [
+        "Best Latency",
+        "Trojan WS 1"
+      ]
+    },
+    {
+      "type": "urltest",
+      "tag": "Best Latency",
+      "outbounds": [
+        "Trojan WS 1"
+      ],
+      "url": "https://detectportal.firefox.com/success.txt",
+      "interval": "1m0s"
+    },
+    {
+      "domain_strategy": "ipv4_only",
+      "tag": "Trojan WS 1",
+      "type": "trojan",
+      "server": "104.22.5.240",
+      "server_port": 80,
+      "password": "15cdcb27aa424fe7",
+      "tls": {
+        "enabled": false,
+        "server_name": "runcloud-dmd.apasih.id",
+        "insecure": true,
+        "utls": {
+          "enabled": false,
+          "fingerprint": "chrome"
+        }
+      },
+      "transport": {
+        "type": "ws",
+        "path": "/buy-trojan-ws-pm-telegram-at-synricha",
+        "headers": {
+          "Host": "runcloud-dmd.apasih.id"
+        }
+      },
+      "multiplex": {
+        "enabled": false,
+        "protocol": "smux",
+        "max_streams": 32
+      }
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "override_android_vpn": true,
+    "final": "Internet",
+    "geoip": {
+      "download_url": "https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db",
+      "download_detour": "Best Latency"
+    },
+    "geosite": {
+      "download_url": "https://github.com/malikshi/v2ray-rules-dat/releases/latest/download/geosite.db",
+      "download_detour": "Best Latency"
+    },
+    "rules": [
+      {
+        "outbound": "dns-out",
+        "port": [
+          53
+        ]
+      }
+    ]
+  }
+}
